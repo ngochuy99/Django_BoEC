@@ -122,6 +122,7 @@ def admin_update_product(request, update_id):
             product.book.author = author
             product.book.categoryid_id = category
             product.save()
+            product.book.save()
         elif productType == "Electronic":
             brand = request.POST.get("electronicsBrand", "")
             product.name = productName
@@ -131,6 +132,7 @@ def admin_update_product(request, update_id):
             product.image = image
             product.electronic.brand = brand
             product.save()
+            product.electronic.save()
         elif productType == "Clothes":
             brand = request.POST.get("clothesBrand", "")
             clothesType = request.POST.get("clothesType", "")
@@ -142,6 +144,7 @@ def admin_update_product(request, update_id):
             product.clothes.brand = brand
             product.clothes.type = clothesType
             product.save()
+            product.clothes.save()
         return redirect("../admin")
 
 

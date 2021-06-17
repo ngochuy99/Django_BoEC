@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "BoEC",
+    'BoECCustomer.apps.BoeccustomerConfig',
     'BoECSystem.apps.BoecsystemConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,7 +57,10 @@ ROOT_URLCONF = 'BoEC.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'BoECSystem/templates']
+        'DIRS': [
+            BASE_DIR / 'BoECSystem/templates',
+            BASE_DIR / 'BoECCustomer/template'
+        ]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -80,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'boec',
         'USER': 'root',
-        'PASSWORD': 'Cmklcgcdkm123',
+        'PASSWORD': 'huy123',
         'HOST': 'localhost',
         'PORT': 3306,
     }

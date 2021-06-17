@@ -57,15 +57,15 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <span>Products</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/boec/admin">Product List</a>
+                        <a class="collapse-item active" href="/boec/admin">Product List</a>
                         <a class="collapse-item" href="/boec/admin_add_new_product">Add New Product</a>
-                        <a class="collapse-item" href="/boec/verifyOrder">Verify Order</a>
+                        <a class="collapse-item" href="/boec/admin_verify_order">Verify Order</a>
                     </div>
                 </div>
             </li>
@@ -316,6 +316,8 @@
                                             <th>Price</th>
                                             <th>InStock</th>
                                             <th>Type</th>
+                                            <th>Image</th>
+                                            <th>Description</th>
                                             <th>Update</th>
                                             <th>Delete</th>
                                         </tr>
@@ -327,6 +329,8 @@
                                             <th>Price</th>
                                             <th>InStock</th>
                                             <th>Type</th>
+                                            <th>Image</th>
+                                            <th>Description</th>
                                             <th>Update</th>
                                             <th>Delete</th>
                                         </tr>
@@ -339,6 +343,8 @@
                                             <td>{{ item.price }}</td>
                                             <td>{{ item.instock }}</td>
                                             <td>{{ item.productType }}</td>
+                                            <td><img style="width: 100px; height: 100px" src="{{ item.image }}"></td>
+                                            <th>{{ item.description }}</th>
                                             <td><a href="/boec/admin_update_product/{{ item.id }}"><i class="fas fa-wrench"></i></a></td>
                                             <td><a href="/boec/admin_remove_product/{{ item.id }}"><i class="fas fa-trash-alt"></i></a></td>
                                         </tr>

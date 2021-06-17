@@ -57,15 +57,15 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <span>Products</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/boec/admin">Product List</a>
-                        <a class="collapse-item" href="/boec/admin_add_new_product">Add New Product</a>
-                        <a class="collapse-item" href="/boec/verifyOrder">Verify Order</a>
+                        <a class="collapse-item active" href="/boec/admin_add_new_product">Add New Product</a>
+                        <a class="collapse-item" href="/boec/admin_verify_order">Verify Order</a>
                     </div>
                 </div>
             </li>
@@ -322,6 +322,10 @@
                 <div class="form-group">
                     <label for="Image">Image Path</label>
                     <input type="text" class="form-control" name="imagePath" placeholder="ImagePath">
+                </div>
+                <div class="form-group">
+                    <label for="Image">Description</label>
+                    <input type="text" class="form-control" name="description" placeholder="description">
                 </div>
                   <div class="form-group">
                     <label for="supplier">Supplier</label>

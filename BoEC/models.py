@@ -33,7 +33,6 @@ class Book(models.Model):
 
 class Cart(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
-    cartid = models.ForeignKey('self', models.DO_NOTHING, db_column='CartId')  # Field name made lowercase.
     customeruserid = models.ForeignKey('Customer', models.DO_NOTHING, db_column='CustomerUserId')  # Field name made lowercase.
     total = models.FloatField(db_column='Total', blank=True, null=True)  # Field name made lowercase.
     quantity = models.IntegerField(db_column='Quantity', blank=True, null=True)  # Field name made lowercase.
@@ -150,6 +149,7 @@ class Product(models.Model):
     instock = models.IntegerField(db_column='Instock', blank=True, null=True)  # Field name made lowercase.
     rating = models.IntegerField(db_column='Rating', blank=True, null=True)  # Field name made lowercase.
     image = models.TextField(db_column='Image', blank=True, null=True)  # Field name made lowercase.
+    description = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -159,6 +159,7 @@ class Product(models.Model):
 class ProductCart(models.Model):
     productid = models.OneToOneField(Product, models.DO_NOTHING, db_column='ProductId', primary_key=True)  # Field name made lowercase.
     cartid = models.ForeignKey(Cart, models.DO_NOTHING, db_column='CartId')  # Field name made lowercase.
+    quantity = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False

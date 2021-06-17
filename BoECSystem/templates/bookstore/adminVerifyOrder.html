@@ -57,7 +57,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <span>Products</span>
                 </a>
@@ -65,7 +65,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/boec/admin">Product List</a>
                         <a class="collapse-item" href="/boec/admin_add_new_product">Add New Product</a>
-                        <a class="collapse-item" href="/boec/admin_verify_order">Verify Order</a>
+                        <a class="collapse-item active" href="/boec/admin_verify_order">Verify Order</a>
                     </div>
                 </div>
             </li>
@@ -297,96 +297,62 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Add New Product</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
+                <div class="container-fluid">
 
-              <form action="/boec/admin_update_product/{{ product.id }}" method="POST">
-              {% csrf_token %}
-                <div id="add_new_form" class="card-body">
-                  <div class="form-group">
-                    <label for="productName">Product Name:</label>
-                    <input value="{{ product.name }}" type="text" class="form-control" name="productName" placeholder="Product name">
-                  </div>
-                <div class="form-group">
-                    <label for="price">Price</label>
-                    <input value="{{ product.price }}" type="number" class="form-control" name="productPrice" placeholder="Price">
-                </div>
-                <div class="form-group">
-                    <label for="inStock">InStock</label>
-                    <input value="{{ product.instock }}" type="number" class="form-control" name="inStock" placeholder="inStock">
-                </div>
-                <div class="form-group">
-                    <label for="Image">Image Path</label>
-                    <input contenteditable="false" value="{{ product.image }}" type="text" class="form-control" name="imagePath" placeholder="ImagePath">
-                </div>
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <input value="{{ product.description }}" type="text" class="form-control" name="description" placeholder="description">
-                </div>
-                <div class="form-group">
-                    <label for="supplier">Supplier</label>
-                    <select name="productSupplier" id="productSupplier" class="custom-select" >
-                      {% for x in supplier %}
-                          {% if x.id == product.supplierid.id %}
-                              <option selected value="{{ x.id }}">{{ x.name }}</option>
-                          {% endif %}
-                          {% if x.id != product.supplierid.id %}
-                              <option value="{{ x.id }}">{{ x.name }}</option>
-                          {% endif %}
-                      {% endfor %}
-                    </select>
-                  </div>
-                  <div class="form-group" id="itemType">
-                    <label for="type">Type</label>
-                    <input readonly value="{{ product.productType }}"  type="text" class="form-control" name="productType" placeholder="productType">
-                  </div>
-                    <div id="book_addon"  style="display: {{ book_type }}">
-                        <div class="form-group" >
-                            <label for="type">Author</label>
-                            <input type="text" class="form-control" name="author" placeholder="Author">
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Order</h1>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Orders List</h6>
                         </div>
-                        <div class="form-group" >
-                            <label for="category">Category</label>
-                            <select name="productCategory" id="productCategory" class="custom-select" >
-                                {% for x in category %}
-                                    {% if x.id == product.book.categoryid.id %}
-                                        <option selected value="{{ x.id }}">{{ x.name }}</option>
-                                    {% endif %}
-                                    {% if x.id != product.book.categoryid.id %}
-                                        <option value="{{ x.id }}">{{ x.name }}</option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                    <div id="electronic_addon" style="display: {{ electronic_type }}">
-                        <div class="form-group" >
-                            <label for="brand">Brand</label>
-                            <input value="{{ product.electronic.brand }}" type="text" class="form-control" name="electronicsBrand" placeholder="Brand">
-                        </div>
-                    </div>
-                    <div id="clothes_addon" style="display: {{ clothes_type }}">
-                        <div class="form-group" >
-                            <label for="brand">Brand</label>
-                            <input value="{{ product.clothes.brand }}" type="text" class="form-control" name="clothesBrand" placeholder="Nike, Adidas">
-                        </div>
-                    <div class="form-group" >
-                            <label for="type">Type</label>
-                            <input value="{{ product.clothes.type }}" type="text" class="form-control" name="clothesType" placeholder="Tshirt, Suit">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Customer Name</th>
+                                            <th>Order Date</th>
+                                            <th>Total</th>
+                                            <th>Quantity</th>
+                                            <th>Status</th>
+                                            <th>Pay Method</th>
+                                            <th>Shipment Destination</th>
+                                            <th>Shipment Fee</th>
+                                            <th>Verify</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Customer Name</th>
+                                            <th>Order Date</th>
+                                            <th>Total</th>
+                                            <th>Quantity</th>
+                                            <th>Status</th>
+                                            <th>Pay Method</th>
+                                            <th>Shipment Destination</th>
+                                            <th>Shipment Fee</th>
+                                            <th>Verify</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                    {% for item in product %}
+                                        <tr>
+                                            <td>{{ item.name }}</td>
+                                            <td>{{ item.supplierid.name }}</td>
+                                            <td>{{ item.price }}</td>
+                                            <td>{{ item.instock }}</td>
+                                            <td>{{ item.productType }}</td>
+                                            <td><a href="/boec/admin_update_product/{{ item.id }}"><i class="fas fa-wrench"></i></a></td>
+                                            <td><a href="/boec/admin_remove_product/{{ item.id }}"><i class="fas fa-trash-alt"></i></a></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                  <button id="submit_btn" type="submit" class="btn btn-primary">Submit</button>
-                </div>
-              </form>
-            </div>
                 <!-- /.container-fluid -->
 
             </div>
@@ -449,35 +415,7 @@
 
     <!-- Page level custom scripts -->
     <script src="../../static/js/demo/datatables-demo.js"></script>
-    <script>
-        $('#productType').change(function (){
-            const type = $(this).val();
-            if(type === "default"){
-                $('#submit_btn').attr('disabled',true)
-                $('#book_addon').css("display","none")
-                $('#electronic_addon').css("display","none")
-                $('#clothes_addon').css("display","none")
-            }
-            else {
-                $('#submit_btn').removeAttr('disabled')
-            }
-            if(type === "book"){
-                $('#book_addon').css("display","unset")
-                $('#electronic_addon').css("display","none")
-                $('#clothes_addon').css("display","none")
-            }
-            else if(type === "electronic"){
-                $('#book_addon').css("display","none")
-                $('#electronic_addon').css("display","unset")
-                $('#clothes_addon').css("display","none")
-            }
-            else if(type === "clothes"){
-                $('#book_addon').css("display","none")
-                $('#electronic_addon').css("display","none")
-                $('#clothes_addon').css("display","unset")
-            }
-        })
-    </script>
+
 </body>
 
 </html>

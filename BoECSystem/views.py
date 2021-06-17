@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from BoECSystem.models import *
+from BoEC.models import *
 
 
 # Create your views here.
@@ -9,9 +9,18 @@ def login(request):
         username = request.POST.get("username", "")
         password = request.POST.get("password", "")
         user = User.objects.get(username=username, password=password)
-        if isinstance(user.customer, Customer):
-            print("true")
-
+        if hasattr(user, "customer"):
+            fullname = user.customer.fullnameid.firstname + " " + user.customer.fullnameid.lastname
+            request.session["user"] = fullname
+            request.session["role"] = "customer"
+            request.session["user_id"] = user.id
+            return redirect("../shop/index")
+        elif hasattr(user, "employee"):
+            fullname = user.employee.fullnameid.firstname + " " + user.employee.fullnameid.lastname
+            request.session["user"] = fullname
+            request.session["role"] = "admin"
+            request.session["user_id"] = user.id
+            return redirect("../boec/admin")
     return render(request, 'bookstore/login.html', {"status": "none"})
 
 
@@ -41,10 +50,6 @@ def register(request):
             return render(request, 'bookstore/login.html', {"status": "none"})
 
     return render(request, 'bookstore/register.html', {"status": "none"})
-
-
-def index(request):
-    return render(request, 'bookstore/mainPage.html')
 
 
 def admin_index(request):
@@ -110,10 +115,12 @@ def admin_update_product(request, update_id):
         supplier = request.POST.get("productSupplier", 1)
         inStock = request.POST.get("inStock", 0)
         image = request.POST.get("imagePath", "")
+        description = request.POST.get("description","")
         product = Product.objects.get(id=update_id)
         if productType == "Book":
             author = request.POST.get("author", "")
             category = request.POST.get("productCategory")
+            product.description = description
             product.name = productName
             product.price = productPrice
             product.supplierid_id = supplier
@@ -125,6 +132,7 @@ def admin_update_product(request, update_id):
             product.book.save()
         elif productType == "Electronic":
             brand = request.POST.get("electronicsBrand", "")
+            product.description = description
             product.name = productName
             product.price = productPrice
             product.supplierid_id = supplier
@@ -136,6 +144,7 @@ def admin_update_product(request, update_id):
         elif productType == "Clothes":
             brand = request.POST.get("clothesBrand", "")
             clothesType = request.POST.get("clothesType", "")
+            product.description = description
             product.name = productName
             product.price = productPrice
             product.supplierid_id = supplier
@@ -160,12 +169,17 @@ def admin_add_product(request):
         supplier = request.POST.get("productSupplier", 1)
         inStock = request.POST.get("inStock", 0)
         image = request.POST.get("imagePath", "")
+        description = request.POST.get("description","")
         if productType == "book":
             author = request.POST.get("author", "")
             category = request.POST.get("productCategory")
-            product = Product(supplierid_id=supplier, name=productName, price=productPrice, instock=inStock,
+            product = Product(supplierid_id=supplier,
+                              name=productName,
+                              price=productPrice,
+                              instock=inStock,
                               image=image,
-                              rating=0)
+                              rating=0,
+                              description=description)
             product.save()
             book = Book(productid=product, author=author, categoryid_id=category)
             book.save()
@@ -189,3 +203,18 @@ def admin_add_product(request):
         supplier = Supplier.objects.all()
         category = Category.objects.all()
         return render(request, 'bookstore/adminAddNewProduct.html', {'supplier': supplier, 'category': category})
+
+
+def admin_verify_order(request):
+    if request.method == "GET":
+        return render(request, 'bookstore/adminVerifyOrder.html')
+    if request.method == "POST":
+        redirect("../admin_verify_order")
+
+
+def check_role(request):
+    if request.session.get("user") is None:
+        return redirect("../login")
+    else:
+        if request.session.get("role") == "customer":
+            return redirect("../index")

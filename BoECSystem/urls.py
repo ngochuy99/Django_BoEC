@@ -9,15 +9,15 @@ urlpatterns = [
 
     path('login', views.login, name='login'),
 
-    path('index', views.index, name="index"),
-
     path('admin', views.admin_index, name="admin"),
 
     path('admin_add_new_product', views.admin_add_product, name="admin_add_new_product"),
 
     path('admin_remove_product/<int:remove_id>', views.admin_remove_product, name="admin_remove_product"),
 
-    path('admin_update_product/<int:update_id>', views.admin_update_product, name="admin_update_product")
+    path('admin_update_product/<int:update_id>', views.admin_update_product, name="admin_update_product"),
+
+    path('admin_verify_order', views.admin_verify_order, name="admin_verify_order")
 
     #
     # path('book', views.getbook, name="getbook"),

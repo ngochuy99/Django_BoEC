@@ -336,15 +336,17 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                    {% for item in product %}
+                                    {% for item in order %}
                                         <tr>
-                                            <td>{{ item.name }}</td>
-                                            <td>{{ item.supplierid.name }}</td>
-                                            <td>{{ item.price }}</td>
-                                            <td>{{ item.instock }}</td>
-                                            <td>{{ item.productType }}</td>
-                                            <td><a href="/boec/admin_update_product/{{ item.id }}"><i class="fas fa-wrench"></i></a></td>
-                                            <td><a href="/boec/admin_remove_product/{{ item.id }}"><i class="fas fa-trash-alt"></i></a></td>
+                                            <td>{{ item.customeruserid.fullnameid.firstname }} {{ item.customeruserid.fullnameid.lastname }}</td>
+                                            <td>{{ item.orderdate }}</td>
+                                            <td>${{ item.total }}</td>
+                                            <td>{{ item.paymentid.cartid.quantity }}</td>
+                                            <td>{{ item.status }}</td>
+                                            <td>{{ item.paymentid.paymethod }}</td>
+                                            <td>{{ item.paymentid.shipmentid.shipdes }}</td>
+                                            <td>{{ item.paymentid.shipmentid.shipfee }}</td>
+                                            <td><a href="/boec/admin_verify_order/{{ item.id }}"><i class="fas fa-check-circle"></i></a></td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>

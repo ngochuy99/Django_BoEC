@@ -54,7 +54,10 @@ def register(request):
 
 def admin_index(request):
     product = Product.objects.all()
+    i = 1
     for item in product:
+        item.pos = i
+        i += 1
         if hasattr(item, "book"):
             item.productType = "Book"
         if hasattr(item, "clothes"):
@@ -115,7 +118,7 @@ def admin_update_product(request, update_id):
         supplier = request.POST.get("productSupplier", 1)
         inStock = request.POST.get("inStock", 0)
         image = request.POST.get("imagePath", "")
-        description = request.POST.get("description","")
+        description = request.POST.get("description", "")
         product = Product.objects.get(id=update_id)
         if productType == "Book":
             author = request.POST.get("author", "")
@@ -169,7 +172,7 @@ def admin_add_product(request):
         supplier = request.POST.get("productSupplier", 1)
         inStock = request.POST.get("inStock", 0)
         image = request.POST.get("imagePath", "")
-        description = request.POST.get("description","")
+        description = request.POST.get("description", "")
         if productType == "book":
             author = request.POST.get("author", "")
             category = request.POST.get("productCategory")
@@ -207,9 +210,30 @@ def admin_add_product(request):
 
 def admin_verify_order(request):
     if request.method == "GET":
-        return render(request, 'bookstore/adminVerifyOrder.html')
+        order = Order.objects.all()
+        return render(request, 'bookstore/adminVerifyOrder.html', {"order": order})
+
+
+def admin_verify_order_detail(request, order_id):
+    if request.method == "GET":
+        order = Order.objects.get(id=order_id)
+        cart = order.paymentid.cartid
+        product_cart = ProductCart.objects.filter(cartid=cart)
+        if order.status == "verified":
+            status = "disabled"
+        else:
+            status = ""
+        return render(request, "bookstore/adminVerifyOrderDetail.html", {"order": order, "product_cart": product_cart,"display":status})
     if request.method == "POST":
-        redirect("../admin_verify_order")
+        order = Order.objects.get(id=order_id)
+        cart = order.paymentid.cartid
+        product_cart = ProductCart.objects.filter(cartid=cart)
+        for x in product_cart:
+            x.productid.instock -= x.quantity
+            x.productid.save()
+        order.status = "verified"
+        order.save()
+        return redirect("../admin_verify_order")
 
 
 def check_role(request):

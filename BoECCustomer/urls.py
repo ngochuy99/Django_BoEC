@@ -9,7 +9,13 @@ urlpatterns = [
 
     path('product_detail/<int:product_id>', views.product_detail, name="product_detail"),
 
-    path('add_product_to_cart/<int:product_id>',views.add_product_to_cart,name = "add_product_to_cart")
+    path('add_product_to_cart/<int:product_id>',views.add_product_to_cart,name = "add_product_to_cart"),
+
+    path('product_list',views.product_list,name="product_list"),
+
+    path('checkout', views.checkout, name="checkout"),
+
+    path('remove_from_cart/<int:product_id>',views.remove_from_cart,name="remove_from_cart")
 
     #
     # path('book', views.getbook, name="getbook"),

@@ -17,7 +17,9 @@ urlpatterns = [
 
     path('admin_update_product/<int:update_id>', views.admin_update_product, name="admin_update_product"),
 
-    path('admin_verify_order', views.admin_verify_order, name="admin_verify_order")
+    path('admin_verify_order', views.admin_verify_order, name="admin_verify_order"),
+
+    path('admin_verify_order/<int:order_id>', views.admin_verify_order_detail, name="admin_verify_order_detail")
 
     #
     # path('book', views.getbook, name="getbook"),

@@ -87,9 +87,9 @@ def add_product_to_cart(request, product_id):
     quantity = request.POST.get("quantity")
     cart_check = Cart.objects.filter(customeruserid=request.session.get("user_id"), status="holding").count()
     if cart_check == 0:
-        cart = Cart(total=0, quantity=quantity, customeruserid_id=request.session.get("user_id"), status="holding")
-        cart.save()
         product = Product.objects.get(id=product_id)
+        cart = Cart(total=product.price*float(quantity), quantity=quantity, customeruserid_id=request.session.get("user_id"), status="holding")
+        cart.save()
         product_cart = ProductCart(cartid=cart, productid=product, quantity=quantity)
         product_cart.save()
     elif cart_check != 0:
